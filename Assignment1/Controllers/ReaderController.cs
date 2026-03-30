@@ -1,39 +1,94 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Assignment1.Models;
+using Assignment1.Repositories;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Assignment1.Controllers
 {
-    [ApiController]
-    [Route("[controller]")]
-    public class ReaderController : ControllerBase
+    public class ReaderController : Controller
     {
-        [HttpGet]
-        public string GetAllReaders()
+        private readonly ReaderRepo _readerRepo;
+
+        public ReaderController()
         {
-            return "These are all the readers!";
+            _readerRepo = new ReaderRepo();
         }
 
-        [HttpGet("{id}")]
-        public string GetReader(int id)
+        // GET: /reader
+        public IActionResult Index()
         {
-            return $"This reader is ID# {id}.";
+            var readers = _readerRepo.GetAll();
+            return View(readers);
         }
 
+        //GET: /reader/details/(id)
+        public IActionResult Details(int id)
+        {
+            var reader = _readerRepo.GetById(id);
+            if (reader == null)
+            {
+                return NotFound();
+            }
+            return View(reader);
+        }
+
+        //GET: /reader/create
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        //POST: /reader/create
         [HttpPost]
-        public string CreateReader()
+        public IActionResult Create(Reader reader)
         {
-            return "This is a reader post request!";
+            if (ModelState.IsValid)
+            {
+                _readerRepo.Add(reader);
+                return RedirectToAction("Index");
+            }
+            return View(reader);
         }
 
-        [HttpPut("{id}")]
-        public string UpdateReader(int id)
+        // GET: /reader/edit/(id)
+        public IActionResult Edit(int id)
         {
-            return $"Reader ID# {id} has been updated.";
+            var reader = _readerRepo.GetById(id);
+            if (reader == null)
+            {
+                return NotFound();
+            }
+            return View(reader);
         }
 
-        [HttpDelete("{id}")]
-        public string DeleteReader(int id)
+        // POST: /reader/edit/(id)
+        [HttpPost]
+        public IActionResult Edit(Reader reader)
         {
-            return $"Reader ID# {id} has been deleted.";
+            if (ModelState.IsValid)
+            {
+                _readerRepo.Update(reader);
+                return RedirectToAction("Index");
+            }
+            return View(reader);
+        }
+
+        // GET: /reader/delete/id
+        public IActionResult Delete(int id)
+        {
+            var reader = _readerRepo.GetById(id);
+            if (reader == null)
+            {
+                return NotFound();
+            }
+            return View(reader);
+        }
+
+        // POST: /reader/delete/id
+        [HttpPost, ActionName("Delete")]
+        public IActionResult DeleteConfirmed(int id)
+        {
+            _readerRepo.Delete(id);
+            return RedirectToAction("Index");
         }
     }
 }

@@ -1,39 +1,94 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Assignment1.Models;
+using Assignment1.Repositories;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Assignment1.Controllers
 {
-    [ApiController]
-    [Route("[controller]")]
-    public class BookController : ControllerBase
+    public class BookController : Controller
     {
-        [HttpGet]
-        public string GetAllBooks()
+        private readonly BookRepo _bookRepo;
+
+        public BookController()
         {
-            return "These are all the books!";
+            _bookRepo = new BookRepo();
         }
 
-        [HttpGet("{id}")]
-        public string GetBook(int id)
+        // GET: /book
+        public IActionResult Index()
         {
-            return $"This book is ID# {id}.";
+            var books = _bookRepo.GetAll();
+            return View(books);
         }
 
+        //GET: /book/details/(id)
+        public IActionResult Details(int id)
+        {
+            var book = _bookRepo.GetById(id);
+            if (book == null)
+            {
+                return NotFound();
+            }
+            return View(book);
+        }
+
+        //GET: /book/create
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        //POST: /book/create
         [HttpPost]
-        public string CreateBook()
+        public IActionResult Create(Book book)
         {
-            return "This is a book post request!";
+            if (ModelState.IsValid)
+            {
+                _bookRepo.Add(book);
+                return RedirectToAction("Index");
+            }
+            return View(book);
         }
 
-        [HttpPut("{id}")]
-        public string UpdateBook(int id)
+        // GET: /book/edit/(id)
+        public IActionResult Edit(int id)
         {
-            return $"Book ID# {id} has been updated.";
+            var book = _bookRepo.GetById(id);
+            if (book == null)
+            {
+                return NotFound();
+            }
+            return View(book);
         }
 
-        [HttpDelete("{id}")]
-        public string DeleteBook(int id)
+        // POST: /book/edit/(id)
+        [HttpPost]
+        public IActionResult Edit(Book book)
         {
-            return $"Book ID# {id} has been deleted.";
+            if (ModelState.IsValid)
+            {
+                _bookRepo.Update(book);
+                return RedirectToAction("Index");
+            }
+            return View(book);
+        }
+
+        // GET: /Book/Delete/id
+        public IActionResult Delete(int id)
+        {
+            var book = _bookRepo.GetById(id);
+            if (book == null)
+            {
+                return NotFound();
+            }
+            return View(book);
+        }
+
+        // POST: /Book/Delete/id
+        [HttpPost, ActionName("Delete")]
+        public IActionResult DeleteConfirmed(int id)
+        {
+            _bookRepo.Delete(id);
+            return RedirectToAction("Index");
         }
     }
 }

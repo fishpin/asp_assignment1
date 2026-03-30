@@ -1,0 +1,43 @@
+﻿@model List<Borrowing>
+
+@{
+    ViewData["Title"] = "Borrowings";
+}
+
+<h1>Borrowings</h1>
+
+<a asp-action="Create">Add New Borrowing</a>
+
+<table>
+    <thead>
+        <tr>
+            <th>Book ID</th>
+            <th>Reader ID</th>
+            <th>Borrow Date</th>
+            <th>Due Date</th>
+            <th>Return Date</th>
+            <th>Overdue</th>
+            <th>Late Fee</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var borrowing in Model)
+        {
+            <tr>
+                <td>@borrowing.BookId</td>
+                <td>@borrowing.ReaderId</td>
+                <td>@borrowing.BorrowDate</td>
+                <td>@borrowing.DueDate</td>
+                <td>@borrowing.ReturnDate</td>
+                <td>@borrowing.IsOverdue</td>
+                <td>@borrowing.OverdueFee</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@borrowing.Id">Details</a> |
+                    <a asp-action="Edit" asp-route-id="@borrowing.Id">Edit</a> |
+                    <a asp-action="Delete" asp-route-id="@borrowing.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

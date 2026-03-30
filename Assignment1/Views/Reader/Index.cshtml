@@ -1,0 +1,39 @@
+﻿@model List<Reader>
+
+@{
+    ViewData["Title"] = "Readers";
+}
+
+<h1>Readers</h1>
+
+<a asp-action="Create">Add New Reader</a>
+
+<table>
+    <thead>
+        <tr>
+            <th>Full Name</th>
+            <th>Email</th>
+            <th>Phone Number</th>
+            <th>Address</th>
+            <th>Member Since</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var reader in Model)
+        {
+            <tr>
+                <td>@reader.FullName</td>
+                <td>@reader.Email</td>
+                <td>@reader.PhoneNumber</td>
+                <td>@reader.Address</td>
+                <td>@reader.MemberSince</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@reader.Id">Details</a> |
+                    <a asp-action="Edit" asp-route-id="@reader.Id">Edit</a> |
+                    <a asp-action="Delete" asp-route-id="@reader.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

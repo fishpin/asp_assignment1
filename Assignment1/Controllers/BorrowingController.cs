@@ -1,39 +1,107 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Assignment1.Models;
+using Assignment1.Repositories;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Assignment1.Controllers
 {
-    [ApiController]
-    [Route("[controller]")]
-    public class BorrowingController : ControllerBase
+    public class BorrowingController : Controller
     {
-        [HttpGet]
-        public string GetAllBorrowings()
+        private readonly BorrowingRepo _borrowingRepo;
+        private readonly ReaderRepo _readerRepo;
+        private readonly BookRepo _bookRepo;
+
+        public BorrowingController()
         {
-            return "These are all the borrowings!";
+            _borrowingRepo = new BorrowingRepo();
+            _readerRepo = new ReaderRepo();
+            _bookRepo = new BookRepo();
         }
 
-        [HttpGet("{id}")]
-        public string GetBorrowing(int id)
+        // GET: /borrowing
+        public IActionResult Index()
         {
-            return $"This borrowing is ID# {id}.";
+            var borrowing = _borrowingRepo.GetAll();
+            return View(borrowing);
         }
 
+        //GET: /borrowing/details/(id)
+        public IActionResult Details(int id)
+        {
+            var borrowing = _borrowingRepo.GetById(id);
+            if (borrowing == null)
+            {
+                return NotFound();
+            }
+            return View(borrowing);
+        }
+
+        //GET: /borrowing/create
+        public IActionResult Create()
+        {
+            ViewBag.Books = _bookRepo.GetAll();
+            ViewBag.Readers = _readerRepo.GetAll();
+            return View();
+        }
+
+        //POST: /borrowing/create
         [HttpPost]
-        public string CreateBorrowing()
+        public IActionResult Create(Borrowing borrowing)
         {
-            return "This is a borrowings post request!";
+            if (ModelState.IsValid)
+            {
+                _borrowingRepo.Add(borrowing);
+                return RedirectToAction("Index");
+            }
+            ViewBag.Books = _bookRepo.GetAll();
+            ViewBag.Readers = _readerRepo.GetAll();
+            return View(borrowing);
         }
 
-        [HttpPut("{id}")]
-        public string UpdateBorrowing(int id)
+        // GET: /borrowing/edit/(id)
+        public IActionResult Edit(int id)
         {
-            return $"Borrowing ID# {id} has been updated.";
+            var borrowing = _borrowingRepo.GetById(id);
+            if (borrowing == null)
+            {
+                return NotFound();
+            }
+            ViewBag.Books = _bookRepo.GetAll();
+            ViewBag.Readers = _readerRepo.GetAll();
+            return View(borrowing);
         }
 
-        [HttpDelete("{id}")]
-        public string DeleteBorrowing(int id)
+        // POST: /borrowing/edit/(id)
+        [HttpPost]
+        public IActionResult Edit(Borrowing borrowing)
         {
-            return $"Borrowing ID# {id} has been deleted.";
+            if (ModelState.IsValid)
+            {
+                _borrowingRepo.Update(borrowing);
+                return RedirectToAction("Index");
+            }
+            ViewBag.Books = _bookRepo.GetAll();
+            ViewBag.Readers = _readerRepo.GetAll();
+            return View(borrowing);
+        }
+        
+
+        // GET: /borrowing/delete/id
+        public IActionResult Delete(int id)
+        {
+            var borrowing = _borrowingRepo.GetById(id);
+            if (borrowing == null)
+            {
+                return NotFound();
+            }
+            return View(borrowing);
+        }
+
+        // POST: /borrowing/delete/id
+        [HttpPost, ActionName("Delete")]
+        public IActionResult DeleteConfirmed(int id)
+        {
+            _borrowingRepo.Delete(id);
+            return RedirectToAction("Index");
         }
     }
 }

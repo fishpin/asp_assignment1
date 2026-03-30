@@ -1,0 +1,31 @@
+﻿@model Book
+
+@{
+    ViewData["Title"] = "Delete Book";
+}
+
+<h1>Delete Book</h1>
+
+<p>Are you sure you want to delete this book?</p>
+
+<dl>
+    <dt>Title</dt>
+    <dd>@Model.Title</dd>
+    <dt>Author</dt>
+    <dd>@Model.Author</dd>
+    <dt>ISBN</dt>
+    <dd>@Model.ISBN</dd>
+    <dt>Genre</dt>
+    <dd>@Model.Genre</dd>
+    <dt>Year Published</dt>
+    <dd>@Model.YearPublished</dd>
+    <dt>Available</dt>
+    <dd>@Model.IsAvailable</dd>
+</dl>
+
+<form asp-action="Delete" method="post">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit">Yes, Delete</button>
+</form>
+
+<a asp-action="Index">Back to List</a>

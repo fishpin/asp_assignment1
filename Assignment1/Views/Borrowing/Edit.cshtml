@@ -1,0 +1,51 @@
+﻿@model Borrowing
+
+@{
+    ViewData["Title"] = "Edit Borrowing";
+}
+
+<h1>Edit Borrowing</h1>
+
+<form asp-action="Edit" method="post">
+    <input type="hidden" asp-for="Id" />
+    <div>
+        <label asp-for="BookId"></label>
+        <select asp-for="BookId">
+            <option value="">-- Select a Book --</option>
+            @foreach (var book in ViewBag.Books)
+            {
+                <option value="@book.Id">@book.Title</option>
+            }
+        </select>
+        <span asp-validation-for="BookId"></span>
+    </div>
+    <div>
+        <label asp-for="ReaderId"></label>
+        <select asp-for="ReaderId">
+            <option value="">-- Select a Reader --</option>
+            @foreach (var reader in ViewBag.Readers)
+            {
+                <option value="@reader.Id">@reader.FullName</option>
+            }
+        </select>
+        <span asp-validation-for="ReaderId"></span>
+    </div>
+    <div>
+        <label asp-for="BorrowDate"></label>
+        <input asp-for="BorrowDate" type="date" />
+        <span asp-validation-for="BorrowDate"></span>
+    </div>
+    <div>
+        <label asp-for="DueDate"></label>
+        <input asp-for="DueDate" type="date" />
+        <span asp-validation-for="DueDate"></span>
+    </div>
+    <div>
+        <label asp-for="ReturnDate"></label>
+        <input asp-for="ReturnDate" type="date" />
+        <span asp-validation-for="ReturnDate"></span>
+    </div>
+    <button type="submit">Save Changes</button>
+</form>
+
+<a asp-action="Index">Back to List</a>
