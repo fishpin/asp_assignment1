@@ -4,42 +4,43 @@
     ViewData["Title"] = "Add Borrowing";
 }
 
-<h1>Add Borrowing</h1>
+<h1 class="mb-3">Add Borrowing</h1>
 
-<form asp-action="Create" method="post">
-    <div>
-        <label asp-for="BookId"></label>
-        <select asp-for="BookId">
-            <option value="">-- Select a Book --</option>
-            @foreach (var book in ViewBag.Books)
-            {
-                <option value="@book.Id">@book.Title</option>
-            }
-        </select>
-        <span asp-validation-for="BookId"></span>
-    </div>
-    <div>
-        <label asp-for="ReaderId"></label>
-        <select asp-for="ReaderId">
-            <option value="">-- Select a Reader --</option>
-            @foreach (var reader in ViewBag.Readers)
-            {
-                <option value="@reader.Id">@reader.FullName</option>
-            }
-        </select>
-        <span asp-validation-for="ReaderId"></span>
-    </div>
-    <div>
-        <label asp-for="BorrowDate"></label>
-        <input asp-for="BorrowDate" type="date" />
-        <span asp-validation-for="BorrowDate"></span>
-    </div>
-    <div>
-        <label asp-for="DueDate"></label>
-        <input asp-for="DueDate" type="date" />
-        <span asp-validation-for="DueDate"></span>
-    </div>
-    <button type="submit">Add Borrowing</button>
-</form>
-
-<a asp-action="Index">Back to List</a>
+<div class="col-md-6">
+    <form asp-action="Create" method="post">
+        <div class="mb-3">
+            <label asp-for="BookId" class="form-label"></label>
+            <select asp-for="BookId" class="form-select">
+                <option value="">-- Select a Book --</option>
+                @foreach (var book in ViewBag.Books)
+                {
+                    <option value="@book.Id">@book.Title</option>
+                }
+            </select>
+            <span asp-validation-for="BookId" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="ReaderId" class="form-label"></label>
+            <select asp-for="ReaderId" class="form-select">
+                <option value="">-- Select a Reader --</option>
+                @foreach (var reader in ViewBag.Readers)
+                {
+                    <option value="@reader.Id">@reader.FullName</option>
+                }
+            </select>
+            <span asp-validation-for="ReaderId" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="BorrowDate" class="form-label"></label>
+            <input asp-for="BorrowDate" type="date" class="form-control" />
+            <span asp-validation-for="BorrowDate" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="DueDate" class="form-label"></label>
+            <input asp-for="DueDate" type="date" class="form-control" />
+            <span asp-validation-for="DueDate" class="text-danger"></span>
+        </div>
+        <button type="submit" class="btn btn-primary">Add Borrowing</button>
+        <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+    </form>
+</div>

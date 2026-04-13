@@ -4,35 +4,36 @@
     ViewData["Title"] = "Add Reader";
 }
 
-<h1>Add Reader</h1>
+<h1 class="mb-3">Add Reader</h1>
 
-<form asp-action="Create" method="post">
-    <div>
-        <label asp-for="FullName"></label>
-        <input asp-for="FullName" />
-        <span asp-validation-for="FullName"></span>
-    </div>
-    <div>
-        <label asp-for="Email"></label>
-        <input asp-for="Email" />
-        <span asp-validation-for="Email"></span>
-    </div>
-    <div>
-        <label asp-for="PhoneNumber"></label>
-        <input asp-for="PhoneNumber" />
-        <span asp-validation-for="PhoneNumber"></span>
-    </div>
-    <div>
-        <label asp-for="Address"></label>
-        <input asp-for="Address" />
-        <span asp-validation-for="Address"></span>
-    </div>
-    <div>
-        <label asp-for="MemberSince"></label>
-        <input asp-for="MemberSince" />
-        <span asp-validation-for="MemberSince"></span>
-    </div>
-    <button type="submit">Add Reader</button>
-</form>
-
-<a asp-action="Index">Back to List</a>
+<div class="col-md-6">
+    <form asp-action="Create" method="post">
+        <div class="mb-3">
+            <label asp-for="FullName" class="form-label"></label>
+            <input asp-for="FullName" class="form-control" />
+            <span asp-validation-for="FullName" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Email" class="form-label"></label>
+            <input asp-for="Email" class="form-control" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="PhoneNumber" class="form-label"></label>
+            <input asp-for="PhoneNumber" class="form-control" />
+            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Address" class="form-label"></label>
+            <input asp-for="Address" class="form-control" />
+            <span asp-validation-for="Address" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="MemberSince" class="form-label"></label>
+            <input asp-for="MemberSince" class="form-control" />
+            <span asp-validation-for="MemberSince" class="text-danger"></span>
+        </div>
+        <button type="submit" class="btn btn-primary">Add Reader</button>
+        <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+    </form>
+</div>

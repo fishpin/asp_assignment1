@@ -1,9 +1,38 @@
 ﻿@{
     ViewData["Title"] = "Dashboard";
 }
-<h1>Welcome to the Library Management System</h1>
-<ul>
-    <li><a asp-controller="Book" asp-action="Index">Manage Books</a></li>
-    <li><a asp-controller="Reader" asp-action="Index">Manage Readers</a></li>
-    <li><a asp-controller="Borrowing" asp-action="Index">Manage Borrowings</a></li>
-</ul>
+
+<div class="jumbotron p-5 mb-4 bg-light rounded-3">
+    <h1 class="display-4">Library Management System</h1>
+    <p class="lead">Welcome! Use the links below to manage the library.</p>
+    <hr class="my-4">
+    <div class="row mt-4">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Books</h5>
+                    <p class="card-text">Manage the library's book collection.</p>
+                    <a asp-controller="Book" asp-action="Index" class="btn btn-primary">Manage Books</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Readers</h5>
+                    <p class="card-text">Manage library members and readers.</p>
+                    <a asp-controller="Reader" asp-action="Index" class="btn btn-primary">Manage Readers</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Borrowings</h5>
+                    <p class="card-text">Track book borrowings and returns.</p>
+                    <a asp-controller="Borrowing" asp-action="Index" class="btn btn-primary">Manage Borrowings</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

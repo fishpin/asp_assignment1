@@ -1,12 +1,10 @@
 ﻿@model List<Reader>
 
 @{
-    ViewData["Title"] = "Readers";
+    ViewData["Title"] = "Search Readers";
 }
 
-<h1 class="mb-3">Readers</h1>
-
-<a asp-action="Create" class="btn btn-primary mb-3">Add New Reader</a>
+<h1 class="mb-3">Search Results</h1>
 
 <form asp-action="Search" method="get" class="mb-3 d-flex gap-2">
     <input type="text" name="query" placeholder="Search by name, email or address" class="form-control" />
@@ -42,3 +40,5 @@
         }
     </tbody>
 </table>
+
+<a asp-action="Index" class="btn btn-secondary">Back to List</a>

@@ -1,29 +1,29 @@
-﻿using Assignment1.Models;
-using Assignment1.Repositories;
+﻿using Assignment1.Data;
+using Assignment1.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Assignment1.Controllers
 {
     public class ReaderController : Controller
     {
-        private readonly ReaderRepo _readerRepo;
+        private readonly LibraryContext _context;
 
-        public ReaderController()
+        public ReaderController(LibraryContext context)
         {
-            _readerRepo = new ReaderRepo();
+            _context = context;
         }
 
-        // GET: /reader
+        // GET: /Reader
         public IActionResult Index()
         {
-            var readers = _readerRepo.GetAll();
+            var readers = _context.Readers.ToList();
             return View(readers);
         }
 
-        //GET: /reader/details/(id)
+        // GET: /Reader/Details/id
         public IActionResult Details(int id)
         {
-            var reader = _readerRepo.GetById(id);
+            var reader = _context.Readers.FirstOrDefault(r => r.Id == id);
             if (reader == null)
             {
                 return NotFound();
@@ -31,28 +31,29 @@ namespace Assignment1.Controllers
             return View(reader);
         }
 
-        //GET: /reader/create
+        // GET: /Reader/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        //POST: /reader/create
+        // POST: /Reader/Create
         [HttpPost]
         public IActionResult Create(Reader reader)
         {
             if (ModelState.IsValid)
             {
-                _readerRepo.Add(reader);
+                _context.Readers.Add(reader);
+                _context.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(reader);
         }
 
-        // GET: /reader/edit/(id)
+        // GET: /Reader/Edit/id
         public IActionResult Edit(int id)
         {
-            var reader = _readerRepo.GetById(id);
+            var reader = _context.Readers.FirstOrDefault(r => r.Id == id);
             if (reader == null)
             {
                 return NotFound();
@@ -60,22 +61,23 @@ namespace Assignment1.Controllers
             return View(reader);
         }
 
-        // POST: /reader/edit/(id)
+        // POST: /Reader/Edit/id
         [HttpPost]
         public IActionResult Edit(Reader reader)
         {
             if (ModelState.IsValid)
             {
-                _readerRepo.Update(reader);
+                _context.Readers.Update(reader);
+                _context.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(reader);
         }
 
-        // GET: /reader/delete/id
+        // GET: /Reader/Delete/id
         public IActionResult Delete(int id)
         {
-            var reader = _readerRepo.GetById(id);
+            var reader = _context.Readers.FirstOrDefault(r => r.Id == id);
             if (reader == null)
             {
                 return NotFound();
@@ -83,12 +85,28 @@ namespace Assignment1.Controllers
             return View(reader);
         }
 
-        // POST: /reader/delete/id
+        // POST: /Reader/Delete/id
         [HttpPost, ActionName("Delete")]
         public IActionResult DeleteConfirmed(int id)
         {
-            _readerRepo.Delete(id);
+            var reader = _context.Readers.FirstOrDefault(r => r.Id == id);
+            if (reader != null)
+            {
+                _context.Readers.Remove(reader);
+                _context.SaveChanges();
+            }
             return RedirectToAction("Index");
+        }
+
+        // GET: /Reader/Search
+        public IActionResult Search(string query)
+        {
+            var readers = _context.Readers
+                .Where(r => r.FullName.Contains(query) ||
+                            r.Email.Contains(query) ||
+                            r.Address.Contains(query))
+                .ToList();
+            return View(readers);
         }
     }
 }

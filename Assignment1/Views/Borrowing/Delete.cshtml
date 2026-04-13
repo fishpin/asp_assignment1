@@ -4,28 +4,30 @@
     ViewData["Title"] = "Delete Borrowing";
 }
 
-<h1>Delete Borrowing</h1>
+<h1 class="mb-3">Delete Borrowing</h1>
 
-<p>Are you sure you want to delete this borrowing?</p>
+<div class="alert alert-danger">Are you sure you want to delete this borrowing?</div>
 
-<dl>
-    <dt>Book ID</dt>
-    <dd>@Model.BookId</dd>
-    <dt>Reader ID</dt>
-    <dd>@Model.ReaderId</dd>
-    <dt>Borrow Date</dt>
-    <dd>@Model.BorrowDate</dd>
-    <dt>Due Date</dt>
-    <dd>@Model.DueDate</dd>
-    <dt>Return Date</dt>
-    <dd>@Model.ReturnDate</dd>
-    <dt>Late Fee</dt>
-    <dd>@Model.OverdueFee</dd>
-</dl>
-
-<form asp-action="Delete" method="post">
-    <input type="hidden" asp-for="Id" />
-    <button type="submit">Yes, Delete</button>
-</form>
-
-<a asp-action="Index">Back to List</a>
+<div class="col-md-6">
+    <dl class="row">
+        <dt class="col-sm-4">Book ID</dt>
+        <dd class="col-sm-8">@Model.BookId</dd>
+        <dt class="col-sm-4">Reader ID</dt>
+        <dd class="col-sm-8">@Model.ReaderId</dd>
+        <dt class="col-sm-4">Borrow Date</dt>
+        <dd class="col-sm-8">@Model.BorrowDate</dd>
+        <dt class="col-sm-4">Due Date</dt>
+        <dd class="col-sm-8">@Model.DueDate</dd>
+        <dt class="col-sm-4">Return Date</dt>
+        <dd class="col-sm-8">@Model.ReturnDate</dd>
+        <dt class="col-sm-4">Overdue</dt>
+        <dd class="col-sm-8">@Model.IsOverdue</dd>
+        <dt class="col-sm-4">Late Fee</dt>
+        <dd class="col-sm-8">@Model.OverdueFee</dd>
+    </dl>
+    <form asp-action="Delete" method="post">
+        <input type="hidden" asp-for="Id" />
+        <button type="submit" class="btn btn-danger">Yes, Delete</button>
+        <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+    </form>
+</div>

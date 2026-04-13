@@ -1,29 +1,30 @@
-﻿using Assignment1.Models;
-using Assignment1.Repositories;
+﻿using Assignment1.Data;
+using Assignment1.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Assignment1.Controllers
 {
     public class BookController : Controller
     {
-        private readonly BookRepo _bookRepo;
+        private readonly LibraryContext _context;
 
-        public BookController()
+        public BookController(LibraryContext context)
         {
-            _bookRepo = new BookRepo();
+            _context = context;
         }
 
-        // GET: /book
+        // GET: /Book
         public IActionResult Index()
         {
-            var books = _bookRepo.GetAll();
+            var books = _context.Books.ToList();
             return View(books);
         }
 
-        //GET: /book/details/(id)
+        // GET: /Book/Details/id
         public IActionResult Details(int id)
         {
-            var book = _bookRepo.GetById(id);
+            var book = _context.Books.FirstOrDefault(b => b.Id == id);
             if (book == null)
             {
                 return NotFound();
@@ -31,28 +32,29 @@ namespace Assignment1.Controllers
             return View(book);
         }
 
-        //GET: /book/create
+        // GET: /Book/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        //POST: /book/create
+        // POST: /Book/Create
         [HttpPost]
         public IActionResult Create(Book book)
         {
             if (ModelState.IsValid)
             {
-                _bookRepo.Add(book);
+                _context.Books.Add(book);
+                _context.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(book);
         }
 
-        // GET: /book/edit/(id)
+        // GET: /Book/Edit/id
         public IActionResult Edit(int id)
         {
-            var book = _bookRepo.GetById(id);
+            var book = _context.Books.FirstOrDefault(b => b.Id == id);
             if (book == null)
             {
                 return NotFound();
@@ -60,13 +62,14 @@ namespace Assignment1.Controllers
             return View(book);
         }
 
-        // POST: /book/edit/(id)
+        // POST: /Book/Edit/id
         [HttpPost]
         public IActionResult Edit(Book book)
         {
             if (ModelState.IsValid)
             {
-                _bookRepo.Update(book);
+                _context.Books.Update(book);
+                _context.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(book);
@@ -75,7 +78,7 @@ namespace Assignment1.Controllers
         // GET: /Book/Delete/id
         public IActionResult Delete(int id)
         {
-            var book = _bookRepo.GetById(id);
+            var book = _context.Books.FirstOrDefault(b => b.Id == id);
             if (book == null)
             {
                 return NotFound();
@@ -87,8 +90,25 @@ namespace Assignment1.Controllers
         [HttpPost, ActionName("Delete")]
         public IActionResult DeleteConfirmed(int id)
         {
-            _bookRepo.Delete(id);
+            var book = _context.Books.FirstOrDefault(b => b.Id == id);
+            if (book != null)
+            {
+                _context.Books.Remove(book);
+                _context.SaveChanges();
+            }
             return RedirectToAction("Index");
         }
+
+        // GET: /Book/Search
+        public IActionResult Search(string query)
+        {
+            var books = _context.Books
+                .Where(b => b.Title.Contains(query) ||
+                            b.Author.Contains(query) ||
+                            b.Genre.Contains(query))
+                .ToList();
+            return View(books);
+        }
     }
+
 }

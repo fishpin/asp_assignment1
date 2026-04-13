@@ -4,22 +4,23 @@
     ViewData["Title"] = "Book Details";
 }
 
-<h1>Book Details</h1>
+<h1 class="mb-3">Book Details</h1>
 
-<dl>
-    <dt>Title</dt>
-    <dd>@Model.Title</dd>
-    <dt>Author</dt>
-    <dd>@Model.Author</dd>
-    <dt>ISBN</dt>
-    <dd>@Model.ISBN</dd>
-    <dt>Genre</dt>
-    <dd>@Model.Genre</dd>
-    <dt>Year Published</dt>
-    <dd>@Model.YearPublished</dd>
-    <dt>Available</dt>
-    <dd>@Model.IsAvailable</dd>
-</dl>
-
-<a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-<a asp-action="Index">Back to List</a>
+<div class="col-md-6">
+    <dl class="row">
+        <dt class="col-sm-4">Title</dt>
+        <dd class="col-sm-8">@Model.Title</dd>
+        <dt class="col-sm-4">Author</dt>
+        <dd class="col-sm-8">@Model.Author</dd>
+        <dt class="col-sm-4">ISBN</dt>
+        <dd class="col-sm-8">@Model.ISBN</dd>
+        <dt class="col-sm-4">Genre</dt>
+        <dd class="col-sm-8">@Model.Genre</dd>
+        <dt class="col-sm-4">Year Published</dt>
+        <dd class="col-sm-8">@Model.YearPublished</dd>
+        <dt class="col-sm-4">Available</dt>
+        <dd class="col-sm-8">@Model.IsAvailable</dd>
+    </dl>
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Edit</a>
+    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+</div>

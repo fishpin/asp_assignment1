@@ -4,22 +4,25 @@
     ViewData["Title"] = "Borrowing Details";
 }
 
-<h1>Borrowing Details</h1>
+<h1 class="mb-3">Borrowing Details</h1>
 
-<dl>
-    <dt>Book ID</dt>
-    <dd>@Model.BookId</dd>
-    <dt>Reader ID</dt>
-    <dd>@Model.ReaderId</dd>
-    <dt>Borrow Date</dt>
-    <dd>@Model.BorrowDate</dd>
-    <dt>Due Date</dt>
-    <dd>@Model.DueDate</dd>
-    <dt>Return Date</dt>
-    <dd>@Model.ReturnDate</dd>
-    <dt>Late Fee</dt>
-    <dd>@Model.OverdueFee</dd>
-</dl>
-
-<a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-<a asp-action="Index">Back to List</a>
+<div class="col-md-6">
+    <dl class="row">
+        <dt class="col-sm-4">Book ID</dt>
+        <dd class="col-sm-8">@Model.BookId</dd>
+        <dt class="col-sm-4">Reader ID</dt>
+        <dd class="col-sm-8">@Model.ReaderId</dd>
+        <dt class="col-sm-4">Borrow Date</dt>
+        <dd class="col-sm-8">@Model.BorrowDate</dd>
+        <dt class="col-sm-4">Due Date</dt>
+        <dd class="col-sm-8">@Model.DueDate</dd>
+        <dt class="col-sm-4">Return Date</dt>
+        <dd class="col-sm-8">@Model.ReturnDate</dd>
+        <dt class="col-sm-4">Overdue</dt>
+        <dd class="col-sm-8">@Model.IsOverdue</dd>
+        <dt class="col-sm-4">Late Fee</dt>
+        <dd class="col-sm-8">@Model.OverdueFee</dd>
+    </dl>
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Edit</a>
+    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+</div>

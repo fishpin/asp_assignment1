@@ -1,19 +1,25 @@
 ﻿@{
     ViewData["Title"] = "Register";
 }
-<h1>Register</h1>
-<form method="post">
-    <div>
-        <label>Full Name</label>
-        <input type="text" name="fullName" />
+
+<div class="row justify-content-center">
+    <div class="col-md-4">
+        <h1 class="mb-3">Register</h1>
+        <form method="post">
+            <div class="mb-3">
+                <label class="form-label">Full Name</label>
+                <input type="text" name="fullName" class="form-control" />
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Email</label>
+                <input type="email" name="email" class="form-control" />
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Password</label>
+                <input type="password" name="password" class="form-control" />
+            </div>
+            <button type="submit" class="btn btn-primary">Register</button>
+            <a asp-controller="Account" asp-action="Login" class="btn btn-secondary">Back to Login</a>
+        </form>
     </div>
-    <div>
-        <label>Email</label>
-        <input type="email" name="email" />
-    </div>
-    <div>
-        <label>Password</label>
-        <input type="password" name="password" />
-    </div>
-    <button type="submit">Register</button>
-</form>
+</div>

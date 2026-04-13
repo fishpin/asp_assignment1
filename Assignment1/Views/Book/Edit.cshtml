@@ -4,40 +4,41 @@
     ViewData["Title"] = "Edit Book";
 }
 
-<h1>Edit Book</h1>
+<h1 class="mb-3">Edit Book</h1>
 
-<form asp-action="Edit" method="post">
-    <input type="hidden" asp-for="Id" />
-    <div>
-        <label asp-for="Title"></label>
-        <input asp-for="Title" />
-        <span asp-validation-for="Title"></span>
-    </div>
-    <div>
-        <label asp-for="Author"></label>
-        <input asp-for="Author" />
-        <span asp-validation-for="Author"></span>
-    </div>
-    <div>
-        <label asp-for="ISBN"></label>
-        <input asp-for="ISBN" />
-        <span asp-validation-for="ISBN"></span>
-    </div>
-    <div>
-        <label asp-for="Genre"></label>
-        <input asp-for="Genre" />
-        <span asp-validation-for="Genre"></span>
-    </div>
-    <div>
-        <label asp-for="YearPublished"></label>
-        <input asp-for="YearPublished" />
-        <span asp-validation-for="YearPublished"></span>
-    </div>
-    <div>
-        <label asp-for="IsAvailable"></label>
-        <input asp-for="IsAvailable" />
-    </div>
-    <button type="submit">Save Changes</button>
-</form>
-
-<a asp-action="Index">Back to List</a>
+<div class="col-md-6">
+    <form asp-action="Edit" method="post">
+        <input type="hidden" asp-for="Id" />
+        <div class="mb-3">
+            <label asp-for="Title" class="form-label"></label>
+            <input asp-for="Title" class="form-control" />
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Author" class="form-label"></label>
+            <input asp-for="Author" class="form-control" />
+            <span asp-validation-for="Author" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="ISBN" class="form-label"></label>
+            <input asp-for="ISBN" class="form-control" />
+            <span asp-validation-for="ISBN" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Genre" class="form-label"></label>
+            <input asp-for="Genre" class="form-control" />
+            <span asp-validation-for="Genre" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="YearPublished" class="form-label"></label>
+            <input asp-for="YearPublished" class="form-control" />
+            <span asp-validation-for="YearPublished" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="IsAvailable" class="form-label"></label>
+            <input asp-for="IsAvailable" class="form-check-input" />
+        </div>
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+        <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+    </form>
+</div>

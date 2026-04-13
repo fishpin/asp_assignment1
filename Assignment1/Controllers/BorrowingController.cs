@@ -1,33 +1,29 @@
-﻿using Assignment1.Models;
-using Assignment1.Repositories;
+﻿using Assignment1.Data;
+using Assignment1.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Assignment1.Controllers
 {
     public class BorrowingController : Controller
     {
-        private readonly BorrowingRepo _borrowingRepo;
-        private readonly ReaderRepo _readerRepo;
-        private readonly BookRepo _bookRepo;
+        private readonly LibraryContext _context;
 
-        public BorrowingController()
+        public BorrowingController(LibraryContext context)
         {
-            _borrowingRepo = new BorrowingRepo();
-            _readerRepo = new ReaderRepo();
-            _bookRepo = new BookRepo();
+            _context = context;
         }
 
-        // GET: /borrowing
+        // GET: /Borrowing
         public IActionResult Index()
         {
-            var borrowing = _borrowingRepo.GetAll();
-            return View(borrowing);
+            var borrowings = _context.Borrowings.ToList();
+            return View(borrowings);
         }
 
-        //GET: /borrowing/details/(id)
+        // GET: /Borrowing/Details/id
         public IActionResult Details(int id)
         {
-            var borrowing = _borrowingRepo.GetById(id);
+            var borrowing = _context.Borrowings.FirstOrDefault(b => b.Id == id);
             if (borrowing == null)
             {
                 return NotFound();
@@ -35,60 +31,61 @@ namespace Assignment1.Controllers
             return View(borrowing);
         }
 
-        //GET: /borrowing/create
+        // GET: /Borrowing/Create
         public IActionResult Create()
         {
-            ViewBag.Books = _bookRepo.GetAll();
-            ViewBag.Readers = _readerRepo.GetAll();
+            ViewBag.Books = _context.Books.ToList();
+            ViewBag.Readers = _context.Readers.ToList();
             return View();
         }
 
-        //POST: /borrowing/create
+        // POST: /Borrowing/Create
         [HttpPost]
         public IActionResult Create(Borrowing borrowing)
         {
             if (ModelState.IsValid)
             {
-                _borrowingRepo.Add(borrowing);
+                _context.Borrowings.Add(borrowing);
+                _context.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.Books = _bookRepo.GetAll();
-            ViewBag.Readers = _readerRepo.GetAll();
+            ViewBag.Books = _context.Books.ToList();
+            ViewBag.Readers = _context.Readers.ToList();
             return View(borrowing);
         }
 
-        // GET: /borrowing/edit/(id)
+        // GET: /Borrowing/Edit/id
         public IActionResult Edit(int id)
         {
-            var borrowing = _borrowingRepo.GetById(id);
+            var borrowing = _context.Borrowings.FirstOrDefault(b => b.Id == id);
             if (borrowing == null)
             {
                 return NotFound();
             }
-            ViewBag.Books = _bookRepo.GetAll();
-            ViewBag.Readers = _readerRepo.GetAll();
+            ViewBag.Books = _context.Books.ToList();
+            ViewBag.Readers = _context.Readers.ToList();
             return View(borrowing);
         }
 
-        // POST: /borrowing/edit/(id)
+        // POST: /Borrowing/Edit/id
         [HttpPost]
         public IActionResult Edit(Borrowing borrowing)
         {
             if (ModelState.IsValid)
             {
-                _borrowingRepo.Update(borrowing);
+                _context.Borrowings.Update(borrowing);
+                _context.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.Books = _bookRepo.GetAll();
-            ViewBag.Readers = _readerRepo.GetAll();
+            ViewBag.Books = _context.Books.ToList();
+            ViewBag.Readers = _context.Readers.ToList();
             return View(borrowing);
         }
-        
 
-        // GET: /borrowing/delete/id
+        // GET: /Borrowing/Delete/id
         public IActionResult Delete(int id)
         {
-            var borrowing = _borrowingRepo.GetById(id);
+            var borrowing = _context.Borrowings.FirstOrDefault(b => b.Id == id);
             if (borrowing == null)
             {
                 return NotFound();
@@ -96,12 +93,29 @@ namespace Assignment1.Controllers
             return View(borrowing);
         }
 
-        // POST: /borrowing/delete/id
+        // POST: /Borrowing/Delete/id
         [HttpPost, ActionName("Delete")]
         public IActionResult DeleteConfirmed(int id)
         {
-            _borrowingRepo.Delete(id);
+            var borrowing = _context.Borrowings.FirstOrDefault(b => b.Id == id);
+            if (borrowing != null)
+            {
+                _context.Borrowings.Remove(borrowing);
+                _context.SaveChanges();
+            }
             return RedirectToAction("Index");
         }
+
+        // GET: /Borrowing/Search
+        public IActionResult Search(string query)
+        {
+            var borrowings = _context.Borrowings
+                .Where(b => b.BookId.ToString().Contains(query) ||
+                            b.ReaderId.ToString().Contains(query))
+                .ToList();
+            return View(borrowings);
+        }
     }
+
+
 }
